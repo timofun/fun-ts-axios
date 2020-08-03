@@ -4,7 +4,7 @@ const webpack = require('webpack')
 
 module.exports = {
   mode: 'development',
-  
+
   /**
    * 我们会在 examples 目录下建多个子目录
    * 我们会把不同章节的 demo 放到不同的子目录中
@@ -19,10 +19,10 @@ module.exports = {
     if (fs.statSync(fullDir).isDirectory() && fs.existsSync(entry)) {
       entries[dir] = ['webpack-hot-middleware/client', entry]
     }
-    
+
     return entries
   }, {}),
-  
+
   /**
    * 根据不同的目录名称，打包生成目标 js，名称和目录名一致
    */
@@ -31,7 +31,7 @@ module.exports = {
     filename: '[name].js',
     publicPath: '/__build__/'
   },
-  
+
   module: {
     rules: [
       {
@@ -53,14 +53,20 @@ module.exports = {
             }
           }
         ]
+      },
+      {
+        test: /\.css$/,
+        use: [
+          'style-loader', 'css-loader'
+        ]
       }
     ]
   },
-  
+
   resolve: {
     extensions: ['.ts', '.tsx', '.js']
   },
-  
+
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin()
