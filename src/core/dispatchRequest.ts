@@ -13,13 +13,13 @@ export default function dispatchRequest(config: AxiosRequestConfig): AxiosPromis
 }
 
 function processConfig(config: AxiosRequestConfig): void {
-  config.url = transformUrl(config)
+  config.url = transformURL(config)
   // 必须先处理headers,不然data被处理之后就变成字符串
   config.data = transform(config.data, config.headers, config.transformRequest)
   config.headers = flattenHeaders(config.headers, config.method!)
 }
 
-function transformUrl(config: AxiosRequestConfig): string {
+export function transformURL(config: AxiosRequestConfig): string {
   let { url, params, paramsSerializer, baseURL } = config
   if (baseURL && !isAbsoluteURL(url!)) {
     url = combineURL(baseURL, url)
